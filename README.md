@@ -10,7 +10,7 @@ top-level menu entry.
   shortcut (Kodi *Favourite*) so it is reachable directly from the home screen
   with the label of your choice.
 * **Reliable browser launch** — the website is opened in the system default
-  browser instead of relying on unsupported embedded webview controls.
+  browser instead of relying on embedded webview window creation.
 * **Configurable URL** — set any website URL in the addon settings.
 * **Configurable menu label** — set the label shown in the navigation bar and
   used for the home-screen shortcut.

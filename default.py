@@ -11,8 +11,8 @@ Lifecycle
    shortcut (Kodi Favourite) so the addon appears as a top-level
    menu entry directly on the home screen.
 4. The configured website URL is opened in the system default browser.
-5. The addon remains useful as a Kodi launcher while avoiding unsupported
-   embedded-browser window creation paths.
+5. The addon remains useful as a Kodi launcher while avoiding embedded
+   webview window creation paths that fail on current Kodi setups.
 """
 
 from __future__ import unicode_literals
@@ -128,7 +128,7 @@ def main():
     _maybe_offer_shortcut(label)
 
     xbmc.log(
-        '{}: Kodi Python addons do not support an embedded browser control; opening {} in the system browser'.format(
+        '{}: embedded webview window creation is disabled; opening {} in the system browser'.format(
             ADDON_ID, url
         ),
         xbmc.LOGINFO,
