@@ -1,0 +1,42 @@
+# Kodi Media Center language file
+# Addon Name: WebView
+# Addon id: plugin.program.webview
+# Addon Provider: jannvck
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "WebView Settings"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Website URL"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Menu Label"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Add home screen shortcut"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Would you like to add a shortcut for this addon to your Kodi home screen (Favourites)?"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#32013"
+msgid "No"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Cannot open browser"
+msgstr ""
+
+msgctxt "#32021"
+msgid "No supported browser is available. Please install the Chromium addon or use a Kodi build with CEF support."
+msgstr ""
