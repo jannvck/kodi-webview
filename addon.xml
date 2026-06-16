@@ -4,7 +4,7 @@
        version="1.0.0"
        provider-name="jannvck">
   <requires>
-    <import addon="xbmc.python" version="2.26.0"/>
+    <import addon="xbmc.python" version="3.0.0"/>
   </requires>
   <!--
     Registers the addon as a runnable plugin that appears in the
