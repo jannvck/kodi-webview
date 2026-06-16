@@ -61,6 +61,23 @@ def _localise(string_id):
     return ADDON.getLocalizedString(string_id)
 
 
+def _open_external_browser(url):
+    try:
+        return webbrowser.open(url)
+    except Exception as exc:
+        xbmc.log(
+            '{}: failed to open external browser for {} ({})'.format(
+                ADDON_ID, url, exc
+            ),
+            xbmc.LOGERROR,
+        )
+        xbmcgui.Dialog().ok(
+            _localise(32020),   # "Cannot open browser"
+            _localise(32021),   # "No supported browser…"
+        )
+        return False
+
+
 # ── Home-screen shortcut (Kodi Favourites) ───────────────────────────
 
 
@@ -120,9 +137,12 @@ class WebViewWindow(xbmcgui.WindowXML):
     def __init__(self, *args, **kwargs):
         self._url = kwargs.pop('url', _DEFAULT_URL)
         self._label = kwargs.pop('label', _DEFAULT_LABEL)
+        self._initialised = False
         super(WebViewWindow, self).__init__(*args, **kwargs)
 
     def onInit(self):
+        self._initialised = True
+
         # Make url and label available to XML info-labels.
         self.setProperty('WebViewURL', self._url)
         self.setProperty('WebViewLabel', self._label)
@@ -134,13 +154,7 @@ class WebViewWindow(xbmcgui.WindowXML):
         except (AttributeError, RuntimeError):
             # Browser control unavailable (non-CEF build).
             self.close()
-            try:
-                webbrowser.open(self._url)
-            except Exception:
-                xbmcgui.Dialog().ok(
-                    _localise(32020),   # "Cannot open browser"
-                    _localise(32021),   # "No supported browser…"
-                )
+            _open_external_browser(self._url)
 
     def onAction(self, action):
         if action.getId() in (
@@ -168,16 +182,36 @@ def main():
 
     _maybe_offer_shortcut(label)
 
-    window = WebViewWindow(
-        'webview.xml',
-        ADDON_PATH,
-        'Default',
-        '720p',
-        url=url,
-        label=label,
-    )
-    window.doModal()
-    del window
+    window = None
+    try:
+        window = WebViewWindow(
+            'webview.xml',
+            ADDON_PATH,
+            'Default',
+            '720p',
+            url=url,
+            label=label,
+        )
+        window.doModal()
+        if not window._initialised:
+            xbmc.log(
+                '{}: webview window failed to initialise, falling back to external browser'.format(
+                    ADDON_ID
+                ),
+                xbmc.LOGWARNING,
+            )
+            _open_external_browser(url)
+    except Exception as exc:
+        xbmc.log(
+            '{}: failed to create webview window ({}), falling back to external browser'.format(
+                ADDON_ID, exc
+            ),
+            xbmc.LOGERROR,
+        )
+        _open_external_browser(url)
+    finally:
+        if window is not None:
+            del window
 
     if handle >= 0:
         xbmcplugin.endOfDirectory(handle)
