@@ -2,18 +2,18 @@
 <!--
   WebView window layout — 720p (1280 × 720).
 
-  The window is a dialog so the underlying Kodi menu remains visible
-  at the edges when the dialog does not fill the full screen.  The
-  browser control takes up every pixel below the navigation bar so
-  the website occupies as much display space as possible while the
-  top bar keeps navigation accessible.
+  The window is a regular Kodi view so the website is integrated into
+  Kodi itself rather than shown as an overlay dialog.  The browser
+  control takes up every pixel below the navigation bar so the website
+  occupies as much display space as possible while the top bar keeps
+  navigation accessible.
 
   Control IDs used by default.py:
     1   – Close button
     100 – Browser control (CEF / chromium builds)
     201 – Configurable page / addon label
 -->
-<window type="dialog">
+<window type="window">
   <defaultcontrol always="true">100</defaultcontrol>
   <controls>
 
