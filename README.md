@@ -9,8 +9,11 @@ top-level menu entry.
   main menu.  On first launch you are offered the option to add a home-screen
   shortcut (Kodi *Favourite*) so it is reachable directly from the home screen
   with the label of your choice.
-* **Reliable browser launch** — the website is opened in the system default
-  browser instead of relying on embedded webview window creation.
+* **Reliable browser launch** — the website is opened in Chromium/Chrome
+  **app mode** (`--app=<url>`), which hides all browser controls (tabs,
+  address bar, back/forward, refresh, bookmarks bar) so only the website
+  content is visible.  If Chromium is not installed the addon falls back to
+  the system default browser.
 * **Configurable URL** — set any website URL in the addon settings.
 * **Configurable menu label** — set the label shown in the navigation bar and
   used for the home-screen shortcut.
@@ -20,7 +23,7 @@ top-level menu entry.
 | Requirement | Notes |
 |---|---|
 | Kodi 18 (Leia) or later | Earlier versions may work but are untested |
-| System web browser | The addon opens the configured URL via Python's `webbrowser` module |
+| Chromium or Google Chrome | Used to open the URL in app mode (controls hidden); falls back to any system browser if not found |
 
 ## Installation
 
