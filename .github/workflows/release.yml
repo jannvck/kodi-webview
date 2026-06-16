@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build addon zip
+        run: |
+          mkdir -p dist/plugin.program.webview
+          cp addon.xml default.py dist/plugin.program.webview/
+          cp -r resources dist/plugin.program.webview/
+          cd dist
+          zip -r "plugin.program.webview-${{ steps.version.outputs.version }}.zip" plugin.program.webview/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/plugin.program.webview-${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true
