@@ -5,7 +5,7 @@
   Identical layout to the 720p variant, scaled proportionally to
   full-HD resolution.  See 720p/webview.xml for control-ID docs.
 -->
-<window type="dialog">
+<window type="window">
   <defaultcontrol always="true">100</defaultcontrol>
   <controls>
 

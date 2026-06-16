@@ -9,9 +9,9 @@ top-level menu entry.
   main menu.  On first launch you are offered the option to add a home-screen
   shortcut (Kodi *Favourite*) so it is reachable directly from the home screen
   with the label of your choice.
-* **Maximised web area** — a slim navigation bar is kept at the top of the
-  screen so you can always close the view and return to Kodi; every other pixel
-  is given to the browser.
+* **Integrated Kodi view** — the website is opened as a regular Kodi window
+  instead of a separate overlay browser, while a slim navigation bar stays at
+  the top so you can always return to Kodi.
 * **Configurable URL** — set any website URL in the addon settings.
 * **Configurable menu label** — set the label shown in the navigation bar and
   used for the home-screen shortcut.
@@ -43,8 +43,7 @@ entry) and set:
 ## Usage
 
 1. Launch the addon from *Programs* (or your home-screen shortcut).
-2. The website opens in a maximised browser pane with a navigation bar at the
-   top.
+2. The website opens as a Kodi page with a navigation bar at the top.
 3. Press the **✕** button, the *Back* key, or the Kodi *Back* action to return
    to Kodi.
 

@@ -10,8 +10,9 @@ Lifecycle
 3. On the very first run the user is offered an optional home-screen
    shortcut (Kodi Favourite) so the addon appears as a top-level
    menu entry directly on the home screen.
-4. A :class:`WebViewWindow` dialog is opened, maximising the browser
-   control below a slim navigation bar (label + close button).
+4. A :class:`WebViewWindow` Kodi window is opened, embedding the browser
+   directly as a regular Kodi view below a slim navigation bar
+   (label + close button).
 5. On Kodi builds *without* CEF/Chromium embedded support the browser
    control is unavailable; the code falls back to
    ``webbrowser.open(url)`` so the site still opens in the system
@@ -102,9 +103,9 @@ def _maybe_offer_shortcut(label):
 # ── WebView window ────────────────────────────────────────────────────
 
 
-class WebViewWindow(xbmcgui.WindowXMLDialog):
+class WebViewWindow(xbmcgui.WindowXML):
     """
-    Dialog window that hosts the browser control.
+    Kodi window that hosts the browser control.
 
     The browser control (control ID 100) fills the entire area below
     the navigation bar, giving the website as much display space as
