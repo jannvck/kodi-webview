@@ -140,6 +140,9 @@ class WebViewWindow(xbmcgui.WindowXML):
         self._initialised = False
         super(WebViewWindow, self).__init__(*args, **kwargs)
 
+    def is_initialised(self):
+        return self._initialised
+
     def onInit(self):
         self._initialised = True
 
@@ -193,7 +196,7 @@ def main():
             label=label,
         )
         window.doModal()
-        if not window._initialised:
+        if not window.is_initialised():
             xbmc.log(
                 '{}: webview window failed to initialise, falling back to external browser'.format(
                     ADDON_ID
