@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  WebView window layout — 720p (1280 × 720).
+
+  The window is a dialog so the underlying Kodi menu remains visible
+  at the edges when the dialog does not fill the full screen.  The
+  browser control takes up every pixel below the navigation bar so
+  the website occupies as much display space as possible while the
+  top bar keeps navigation accessible.
+
+  Control IDs used by default.py:
+    1   – Close button
+    100 – Browser control (CEF / chromium builds)
+    201 – Configurable page / addon label
+-->
+<window type="dialog">
+  <defaultcontrol always="true">100</defaultcontrol>
+  <controls>
+
+    <!-- ── Top navigation bar ─────────────────────────────────── -->
+    <control type="group">
+      <left>0</left>
+      <top>0</top>
+      <width>1280</width>
+      <height>72</height>
+      <controls>
+
+        <!-- Semi-transparent dark background strip -->
+        <control type="image">
+          <left>0</left>
+          <top>0</top>
+          <width>1280</width>
+          <height>72</height>
+          <texture colordiffuse="CC000000">white.png</texture>
+        </control>
+
+        <!-- Addon / page label (populated from Window.Property(WebViewLabel)) -->
+        <control type="label" id="201">
+          <left>20</left>
+          <top>16</top>
+          <width>1160</width>
+          <height>40</height>
+          <label>$INFO[Window.Property(WebViewLabel)]</label>
+          <font>font13</font>
+          <textcolor>FFFFFFFF</textcolor>
+        </control>
+
+        <!-- Close / back button -->
+        <control type="button" id="1">
+          <left>1210</left>
+          <top>10</top>
+          <width>60</width>
+          <height>52</height>
+          <label>✕</label>
+          <font>font13</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <focusedcolor>FFFFFF00</focusedcolor>
+        </control>
+
+      </controls>
+    </control>
+
+    <!-- ── Browser content area (CEF / chromium builds) ────────── -->
+    <!--
+      On Kodi builds without CEF support this control is silently
+      ignored; default.py catches the error and falls back to an
+      external browser.
+
+      The url attribute below reads from a window property that MUST
+      be set via setProperty('WebViewURL', url) in Python (see
+      WebViewWindow.onInit) before this control initialises.  If the
+      property is not set the control loads a blank page.
+    -->
+    <control type="browser" id="100">
+      <left>0</left>
+      <top>72</top>
+      <width>1280</width>
+      <height>648</height>
+      <url>$INFO[Window.Property(WebViewURL)]</url>
+    </control>
+
+  </controls>
+</window>

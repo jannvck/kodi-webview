@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32000">
+    <!--
+      The URL of the website to display when the addon is launched.
+    -->
+    <setting id="url" type="text" label="32001" default="https://example.com"/>
+    <!--
+      The label shown in the webview navigation bar and used as the
+      title when the user adds a home-screen shortcut (Favourite)
+      pointing to this addon.
+    -->
+    <setting id="menu_label" type="text" label="32002" default="WebView"/>
+  </category>
+</settings>

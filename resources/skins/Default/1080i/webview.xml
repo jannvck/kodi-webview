@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  WebView window layout — 1080i (1920 × 1080).
+
+  Identical layout to the 720p variant, scaled proportionally to
+  full-HD resolution.  See 720p/webview.xml for control-ID docs.
+-->
+<window type="dialog">
+  <defaultcontrol always="true">100</defaultcontrol>
+  <controls>
+
+    <!-- ── Top navigation bar ─────────────────────────────────── -->
+    <control type="group">
+      <left>0</left>
+      <top>0</top>
+      <width>1920</width>
+      <height>108</height>
+      <controls>
+
+        <!-- Semi-transparent dark background strip -->
+        <control type="image">
+          <left>0</left>
+          <top>0</top>
+          <width>1920</width>
+          <height>108</height>
+          <texture colordiffuse="CC000000">white.png</texture>
+        </control>
+
+        <!-- Addon / page label -->
+        <control type="label" id="201">
+          <left>30</left>
+          <top>24</top>
+          <width>1740</width>
+          <height>60</height>
+          <label>$INFO[Window.Property(WebViewLabel)]</label>
+          <font>font13</font>
+          <textcolor>FFFFFFFF</textcolor>
+        </control>
+
+        <!-- Close / back button -->
+        <control type="button" id="1">
+          <left>1815</left>
+          <top>14</top>
+          <width>90</width>
+          <height>80</height>
+          <label>✕</label>
+          <font>font13</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <focusedcolor>FFFFFF00</focusedcolor>
+        </control>
+
+      </controls>
+    </control>
+
+    <!-- ── Browser content area (CEF / chromium builds) ────────── -->
+    <!--
+      The url attribute reads from a window property set via
+      setProperty('WebViewURL', url) in Python (WebViewWindow.onInit).
+      If the property is not set the control loads a blank page.
+      On Kodi builds without CEF support default.py falls back to an
+      external browser.
+    -->
+    <control type="browser" id="100">
+      <left>0</left>
+      <top>108</top>
+      <width>1920</width>
+      <height>972</height>
+      <url>$INFO[Window.Property(WebViewURL)]</url>
+    </control>
+
+  </controls>
+</window>
