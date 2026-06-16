@@ -128,7 +128,7 @@ def main():
     _maybe_offer_shortcut(label)
 
     xbmc.log(
-        '{}: embedded webview window creation is disabled; opening {} in the system browser'.format(
+        '{}: opening {} in the system browser'.format(
             ADDON_ID, url
         ),
         xbmc.LOGINFO,
