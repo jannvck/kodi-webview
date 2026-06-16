@@ -17,9 +17,9 @@
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Display a configurable website in Kodi</summary>
-    <description lang="en_GB">A webview addon that opens a user-configured website inside Kodi. The website URL and the menu entry label are both configurable through the addon settings.</description>
-    <news>Initial release.</news>
+    <summary lang="en_GB">Launch a configurable website from Kodi</summary>
+    <description lang="en_GB">A Kodi launcher addon that opens a user-configured website in the system browser. The website URL and the menu entry label are both configurable through the addon settings.</description>
+    <news>Launch configured websites in the system browser instead of attempting embedded webview window creation.</news>
     <platform>all</platform>
     <license>MIT</license>
   </extension>
