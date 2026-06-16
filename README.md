@@ -1,6 +1,6 @@
 # kodi-webview
 
-A simple webview plug-in for Kodi that displays a configurable website as a
+A simple Kodi launcher plug-in that opens a configurable website from a
 top-level menu entry.
 
 ## Features
@@ -9,9 +9,8 @@ top-level menu entry.
   main menu.  On first launch you are offered the option to add a home-screen
   shortcut (Kodi *Favourite*) so it is reachable directly from the home screen
   with the label of your choice.
-* **Integrated Kodi view** — the website is opened as a regular Kodi window
-  instead of a separate overlay browser, while a slim navigation bar stays at
-  the top so you can always return to Kodi.
+* **Reliable browser launch** — the website is opened in the system default
+  browser instead of relying on unsupported embedded webview controls.
 * **Configurable URL** — set any website URL in the addon settings.
 * **Configurable menu label** — set the label shown in the navigation bar and
   used for the home-screen shortcut.
@@ -21,7 +20,7 @@ top-level menu entry.
 | Requirement | Notes |
 |---|---|
 | Kodi 18 (Leia) or later | Earlier versions may work but are untested |
-| CEF / Chromium embedded | Required for in-app browser rendering.  Without it the URL is opened in the system default browser. |
+| System web browser | The addon opens the configured URL via Python's `webbrowser` module |
 
 ## Installation
 
@@ -43,9 +42,8 @@ entry) and set:
 ## Usage
 
 1. Launch the addon from *Programs* (or your home-screen shortcut).
-2. The website opens as a Kodi page with a navigation bar at the top.
-3. Press the **✕** button, the *Back* key, or the Kodi *Back* action to return
-   to Kodi.
+2. The website opens in your system default browser.
+3. Return to Kodi normally after closing or switching away from the browser.
 
 ## Addon structure
 

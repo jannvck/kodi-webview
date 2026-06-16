@@ -38,5 +38,5 @@ msgid "Cannot open browser"
 msgstr ""
 
 msgctxt "#32021"
-msgid "No supported browser is available. Please install the Chromium addon or use a Kodi build with CEF support."
+msgid "No supported system browser is available. Please install a browser that Kodi can launch."
 msgstr ""

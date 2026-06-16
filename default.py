@@ -10,13 +10,9 @@ Lifecycle
 3. On the very first run the user is offered an optional home-screen
    shortcut (Kodi Favourite) so the addon appears as a top-level
    menu entry directly on the home screen.
-4. A :class:`WebViewWindow` Kodi window is opened, embedding the browser
-   directly as a regular Kodi view below a slim navigation bar
-   (label + close button).
-5. On Kodi builds *without* CEF/Chromium embedded support the browser
-   control is unavailable; the code falls back to
-   ``webbrowser.open(url)`` so the site still opens in the system
-   default browser.
+4. The configured website URL is opened in the system default browser.
+5. The addon remains useful as a Kodi launcher while avoiding unsupported
+   embedded-browser window creation paths.
 """
 
 from __future__ import unicode_literals
@@ -117,60 +113,6 @@ def _maybe_offer_shortcut(label):
         _add_favourite(label, plugin_url)
 
 
-# ── WebView window ────────────────────────────────────────────────────
-
-
-class WebViewWindow(xbmcgui.WindowXML):
-    """
-    Kodi window that hosts the browser control.
-
-    The browser control (control ID 100) fills the entire area below
-    the navigation bar, giving the website as much display space as
-    possible.  The navigation bar at the top keeps the Kodi chrome
-    accessible at all times.
-
-    On Kodi builds that do not include CEF/Chromium support the
-    ``browser`` control is absent; :meth:`onInit` catches the error
-    and opens the URL in the system default browser instead.
-    """
-
-    def __init__(self, *args, **kwargs):
-        self._url = kwargs.pop('url', _DEFAULT_URL)
-        self._label = kwargs.pop('label', _DEFAULT_LABEL)
-        self._initialized = False
-        super(WebViewWindow, self).__init__(*args, **kwargs)
-
-    def is_initialized(self):
-        return self._initialized
-
-    def onInit(self):
-        self._initialized = True
-
-        # Make url and label available to XML info-labels.
-        self.setProperty('WebViewURL', self._url)
-        self.setProperty('WebViewLabel', self._label)
-
-        # Attempt to drive the embedded browser control.
-        try:
-            browser = self.getControl(100)
-            browser.setPath(self._url)
-        except (AttributeError, RuntimeError):
-            # Browser control unavailable (non-CEF build).
-            self.close()
-            _open_external_browser(self._url)
-
-    def onAction(self, action):
-        if action.getId() in (
-            xbmcgui.ACTION_PREVIOUS_MENU,
-            xbmcgui.ACTION_NAV_BACK,
-        ):
-            self.close()
-
-    def onClick(self, control_id):
-        if control_id == 1:  # Close / back button (ID 1 in webview.xml)
-            self.close()
-
-
 # ── Entry point ───────────────────────────────────────────────────────
 
 
@@ -185,36 +127,13 @@ def main():
 
     _maybe_offer_shortcut(label)
 
-    window = None
-    try:
-        window = WebViewWindow(
-            'webview.xml',
-            ADDON_PATH,
-            'Default',
-            '720p',
-            url=url,
-            label=label,
-        )
-        window.doModal()
-        if not window.is_initialized():
-            xbmc.log(
-                '{}: webview window failed to initialize, falling back to external browser'.format(
-                    ADDON_ID
-                ),
-                xbmc.LOGWARNING,
-            )
-            _open_external_browser(url)
-    except Exception as exc:
-        xbmc.log(
-            '{}: failed to create webview window ({}), falling back to external browser'.format(
-                ADDON_ID, exc
-            ),
-            xbmc.LOGERROR,
-        )
-        _open_external_browser(url)
-    finally:
-        if window is not None:
-            del window
+    xbmc.log(
+        '{}: Kodi Python addons do not support an embedded browser control; opening {} in the system browser'.format(
+            ADDON_ID, url
+        ),
+        xbmc.LOGINFO,
+    )
+    _open_external_browser(url)
 
     if handle >= 0:
         xbmcplugin.endOfDirectory(handle)
