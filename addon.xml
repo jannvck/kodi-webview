@@ -22,5 +22,11 @@
     <news>Open websites in Chromium app mode to hide all browser controls; fall back to system browser when Chromium is unavailable.</news>
     <platform>all</platform>
     <license>MIT</license>
+    <website>https://jannvck.github.io/kodi-webview/</website>
+    <source>https://github.com/jannvck/kodi-webview</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+    </assets>
   </extension>
 </addon>
