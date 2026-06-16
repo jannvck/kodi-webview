@@ -17,6 +17,7 @@ A simple Kodi launcher plug-in that opens a configurable website from a top-leve
 </p>
 
 <script>
+var BYTES_PER_KB = 1024;
 fetch('https://api.github.com/repos/jannvck/kodi-webview/releases/latest')
   .then(function(r) { return r.json(); })
   .then(function(data) {
@@ -26,13 +27,15 @@ fetch('https://api.github.com/repos/jannvck/kodi-webview/releases/latest')
     if (asset) {
       btn.href = asset.browser_download_url;
       btn.textContent = 'Download ' + data.tag_name + ' (' + asset.name + ')';
-      meta.textContent = ' — ' + (asset.size / 1024).toFixed(1) + ' KB';
+      meta.textContent = ' — ' + (asset.size / BYTES_PER_KB).toFixed(1) + ' KB';
     } else if (data.tag_name) {
       btn.href = data.html_url;
       btn.textContent = 'Download ' + data.tag_name;
     }
   })
-  .catch(function() {});
+  .catch(function(err) {
+    console.error('Failed to fetch release info:', err);
+  });
 </script>
 
 ## Features
