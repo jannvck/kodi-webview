@@ -1,5 +1,6 @@
 title: kodi-webview
 description: A Kodi launcher addon that opens websites in app mode
-theme: jekyll-theme-cayman
+remote_theme: pages-themes/midnight@v0.2.0
 plugins:
   - jekyll-seo-tag
+  - jekyll-remote-theme
