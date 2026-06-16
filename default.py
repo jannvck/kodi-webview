@@ -18,6 +18,9 @@ Lifecycle
 from __future__ import unicode_literals
 
 import json
+import os
+import shutil
+import subprocess
 import sys
 import webbrowser
 
@@ -57,10 +60,92 @@ def _localise(string_id):
     return ADDON.getLocalizedString(string_id)
 
 
+def _find_chromium():
+    """Return the path to a Chromium or Chrome executable, or *None*."""
+    candidates = [
+        # Linux
+        'chromium-browser',
+        'chromium',
+        'google-chrome',
+        'google-chrome-stable',
+        'google-chrome-beta',
+        # macOS
+        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        '/Applications/Chromium.app/Contents/MacOS/Chromium',
+        # Windows (64-bit and 32-bit Program Files)
+        os.path.join(
+            os.environ.get('PROGRAMFILES', r'C:\Program Files'),
+            r'Google\Chrome\Application\chrome.exe',
+        ),
+        os.path.join(
+            os.environ.get('PROGRAMFILES(X86)', r'C:\Program Files (x86)'),
+            r'Google\Chrome\Application\chrome.exe',
+        ),
+        os.path.join(
+            os.environ.get('LOCALAPPDATA') or '',
+            r'Google\Chrome\Application\chrome.exe',
+        ) if os.environ.get('LOCALAPPDATA') else None,
+    ]
+    for candidate in candidates:
+        if candidate is None:
+            continue
+        if os.path.isabs(candidate):
+            if os.path.isfile(candidate):
+                return candidate
+        else:
+            found = shutil.which(candidate)
+            if found:
+                return found
+    return None
+
+
+def _open_chromium_app(url):
+    """
+    Launch Chromium/Chrome in app mode for *url*.
+
+    App mode (``--app=URL``) hides the tab strip, address bar, toolbar
+    (back/forward/refresh) and bookmarks bar so only the website content
+    is visible.  Returns *True* on success, *False* if no Chromium
+    executable was found or the process could not be started.
+    """
+    exe = _find_chromium()
+    if not exe:
+        return False
+    try:
+        subprocess.Popen(
+            [exe, '--app={}'.format(url)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        xbmc.log(
+            '{}: opened {} in Chromium app mode ({})'.format(
+                ADDON_ID, url, exe
+            ),
+            xbmc.LOGINFO,
+        )
+        return True
+    except (OSError, subprocess.SubprocessError) as exc:
+        xbmc.log(
+            '{}: failed to launch Chromium app mode for {} ({})'.format(
+                ADDON_ID, url, exc
+            ),
+            xbmc.LOGWARNING,
+        )
+        return False
+
+
 def _open_external_browser(url):
+    if _open_chromium_app(url):
+        return True
+    xbmc.log(
+        '{}: Chromium not found, falling back to system browser for {}'.format(
+            ADDON_ID, url
+        ),
+        xbmc.LOGINFO,
+    )
     try:
         return webbrowser.open(url)
-    except Exception as exc:
+    except OSError as exc:
         xbmc.log(
             '{}: failed to open external browser for {} ({})'.format(
                 ADDON_ID, url, exc

@@ -18,8 +18,8 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Launch a configurable website from Kodi</summary>
-    <description lang="en_GB">A Kodi launcher addon that opens a user-configured website in the system browser. The website URL and the menu entry label are both configurable through the addon settings.</description>
-    <news>Launch configured websites in the system browser instead of attempting embedded webview window creation.</news>
+    <description lang="en_GB">A Kodi launcher addon that opens a user-configured website in Chromium app mode, hiding all browser controls (tabs, address bar, toolbar) so only the website content is visible. Falls back to the system default browser when Chromium is not available. The website URL and the menu entry label are both configurable through the addon settings.</description>
+    <news>Open websites in Chromium app mode to hide all browser controls; fall back to system browser when Chromium is unavailable.</news>
     <platform>all</platform>
     <license>MIT</license>
   </extension>
