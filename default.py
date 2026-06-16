@@ -137,14 +137,14 @@ class WebViewWindow(xbmcgui.WindowXML):
     def __init__(self, *args, **kwargs):
         self._url = kwargs.pop('url', _DEFAULT_URL)
         self._label = kwargs.pop('label', _DEFAULT_LABEL)
-        self._initialised = False
+        self._initialized = False
         super(WebViewWindow, self).__init__(*args, **kwargs)
 
-    def is_initialised(self):
-        return self._initialised
+    def is_initialized(self):
+        return self._initialized
 
     def onInit(self):
-        self._initialised = True
+        self._initialized = True
 
         # Make url and label available to XML info-labels.
         self.setProperty('WebViewURL', self._url)
@@ -196,9 +196,9 @@ def main():
             label=label,
         )
         window.doModal()
-        if not window.is_initialised():
+        if not window.is_initialized():
             xbmc.log(
-                '{}: webview window failed to initialise, falling back to external browser'.format(
+                '{}: webview window failed to initialize, falling back to external browser'.format(
                     ADDON_ID
                 ),
                 xbmc.LOGWARNING,
